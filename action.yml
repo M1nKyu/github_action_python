@@ -2,11 +2,12 @@ name: 'Custom Github Action'
 description: 'takes number and return the squared number'
 inputs: 
   num:
+    descriptions: 'Enter a number'
     required: true
     default: "1"
 outputs:
   num_squared:
-    value: ${{ }}
+    value: ${{ steps.get-square.outputs.num_squared }}
 runs:
   using: 'composite' #워크플로우의 4개에 대한 조합을 의미..
   steps: #를 통해 세부 워크플로우 들이 실행
@@ -14,14 +15,14 @@ runs:
       uses: actions/setup-python@v4 #마켓플레이스의 ..
       with: 
         python-version: '3.10'
-    - name: Install dependencise
+    - name: Install Dependencise
       runs: pip install -r requirements.txt
       shell: bash
-    - name: Pass inputs to shell
-      runs:|
+    - name: Pass Inputs to shell
+      run: |
         echo "INPUT_NUM=${{ inputs.num }}" >> $GITHUB_ENV
       shell: bash
-    - name: fetch the number's squre
+    - name: Fetch the number's sqaure
       id: get-square
       run: python src/get_num_square.py
       shell: bash 
