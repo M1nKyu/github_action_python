@@ -1,0 +1,17 @@
+name: Test Action
+on: [push] #파일을 새로 쓰기할떄
+
+jobs:
+  get-num-sqaure:
+    runs-on: ubuntu-latest # 우분투 최신버전에 대해서
+    name: Returns the number square 
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Fecth num squared
+        id: get_sqaure
+        uses: ./
+        with:
+          num: 11 # 입력값으로 11을 넣어서 파이썬.py까지 실행하고, 더위에 있는 부모까지 전달시켜서
+      - name: Print the square
+        run : echo "${{ steps.get_square.outputs.num_squared }}"      
