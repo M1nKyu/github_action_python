@@ -1,0 +1,28 @@
+name: 'Custom Github Action'
+description: 'takes number and return the squared number'
+inputs: 
+  num:
+    required: true
+    default: "1"
+outputs:
+  num_squared:
+    value: ${{ }}
+runs:
+  using: 'composite' #워크플로우의 4개에 대한 조합을 의미..
+  steps: #를 통해 세부 워크플로우 들이 실행
+    - name: Install Python
+      uses: actions/setup-python@v4 #마켓플레이스의 ..
+      with: 
+        python-version: '3.10'
+    - name: Install dependencise
+      runs: pip install -r requirements.txt
+      shell: bash
+    - name: Pass inputs to shell
+      runs:|
+        echo "INPUT_NUM=${{ inputs.num }}" >> $GITHUB_ENV
+      shell: bash
+    - name: fetch the number's squre
+      id: get-square
+      run: python src/get_num_square.py
+      shell: bash 
+      # 출력을 하게되면 github에서 인식을 해서 
